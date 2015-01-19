@@ -36,7 +36,7 @@
 ?>
 
 
-Upload Grade sheet:
+Upload Grade sheet(use .CSV file):
 
 <form action="upload.php" method="post" enctype="multipart/form-data">
 Filename:<input type="file" name="file" id="file" /><br />
