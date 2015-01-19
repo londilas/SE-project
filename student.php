@@ -3,6 +3,7 @@
 
 <?php
 	session_start();
+	if(  isset($_SESSION['name']) && $_SESSION['identity']=='s' ){
 	$host   = "127.0.0.1";
 	$dbuser = "root";
 	$dbpw   = "";
@@ -20,8 +21,13 @@
 		echo "<br>";
 	}
 	mysqli_close($link);
+	echo "<br>";
+	echo "<br>";
+	echo "<a href=\"logout.php\">Logout</a>";
+	}
+	else{
+		echo "<h2>You've not logged in as student.</h2><br/>";
+		echo "<meta http-equiv='refresh' content='3;url=index.html'>";
+	}
 	?>
-	<br>
-	<br>
-	<a href="index.html">Back</a> to login form.
 </html>
