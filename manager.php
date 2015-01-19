@@ -83,8 +83,6 @@
 				<li>Identity: <input type="radio" name="Identity" value="s" checked />Student
 					      <input type="radio" name="Identity" value="t" />Teacher
 					      <input type="radio" name="Identity" value="m" />Manager</li>
-
-	</li>
 				<li>Action: <input type="radio" name="Action" value="Add" checked />Add
 					    <input type="radio" name="Action" value="Remove" />Remove</li>
 			</ul>
