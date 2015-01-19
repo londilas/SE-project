@@ -25,7 +25,7 @@
 	$query = "SELECT * FROM account WHERE ID='".mysqli_real_escape_string($link, $id)."'";
 	$current_row = mysqli_fetch_array( mysqli_query($link, $query) );
 
-	if( $current_row && $current_row['PASSWORD'] == $pw )
+	if( $current_row && $current_row['PASSWORD'] == $pw ){
 
 		$_SESSION['name'] = $id;
 		$_SESSION['identity'] = $current_row['TYPE'];
