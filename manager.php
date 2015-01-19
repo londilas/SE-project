@@ -50,7 +50,7 @@
 			if( $SQLCommand != "INVALID" ){
 
 				if( mysqli_query($Connection, $SQLCommand) == false )
-					die("<h2>Failed to add/remove the user.</h2>")
+					die("<h2>Failed to add/remove the user.</h2>");
 				
 				}
 
