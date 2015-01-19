@@ -30,7 +30,7 @@ if($_SESSION['name']==NULL){
 }
 else{
 
-$query2 = "SELECT * FROM account WHERE ID=$id";
+$query2 = "SELECT * FROM account WHERE ID='$id'";
 $result2 = mysql_query($query2);
 $row2 = mysql_fetch_assoc($result2);
 
