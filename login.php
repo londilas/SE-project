@@ -1,46 +1,60 @@
-<?php session_start(); ?>
-
+<!DOCTYPE html>
+<html>
 
 <?php
+	session_start();
 
-$link = mysql_connect("127.0.0.1", "root", "") or die("Could not connect : " . mysql_error());
-mysql_select_db("course_system") or die("Could not select database"); 
+	// This is unsafe!
+	$host   = "127.0.0.1";
+	$dbuser = "root";
+	$dbpw   = "";
+	$dbname = "course_system";
 
-$id = $_POST['UserName'];
-$pw = $_POST['Password'];
+	$link = mysqli_connect($host, $dbuser, $dbpw, $dbname);
 
+	if( mysqli_connect_errno($link) )
+		die("Failed to connect to database.");
 
-$query = "SELECT * FROM account WHERE PASSWORD='$pw'";
-$result = mysql_query($query);
-$total_records=mysql_num_rows($result);  
+	if( isset($_POST['UserName']) == false || isset($_POST['Password']) == false ){
+		die("UserName or Password is not set.");
+		}
 
-for($i=0;$i<$total_records;$i++){
+	$id = $_POST['UserName'];
+	$pw = $_POST['Password'];
 
-$row = mysql_fetch_assoc($result);
+	$query = "SELECT * FROM account WHERE ID='".mysqli_real_escape_string($link, $id)."'";
+	$current_row = mysqli_fetch_array( mysqli_query($link, $query) );
 
-if($id!=null && $pw!= null && $row['ID']==$id){
-   $_SESSION['name']=$id;
-   echo "Success";
-}
-}
+	if( $current_row && $current_row['PASSWORD'] == $pw )
 
-if($_SESSION['name']==NULL){
-   echo "Failed";
-   echo "<meta http-equiv='refresh' content='3;url=login.php'>";
-}
-else{
+		$_SESSION['name'] = $id;
+		$_SESSION['identity'] = $current_row['TYPE'];
+		
+		// If no such type, log him out.
+		$redirect = "logout.php";
 
-$query2 = "SELECT * FROM account WHERE ID='$id'";
-$result2 = mysql_query($query2);
-$row2 = mysql_fetch_assoc($result2);
+		if( $_SESSION['identity'] == "m" )
+			$redirect = "manager.php";
+		else if( $_SESSION['identity'] == "t" )
+			$redirect = "teacher.php";
+		else if( $_SESSION['identity'] == "s" )
+			$redirect = "student.php";
+		
+		echo "<head><meta http-equiv='refresh' content='3;url=".$redirect."'>";
+		echo "<title>Success!</title></head>";
+		echo "<body><h2>Redirecting...</h2></body>";
 
-if($row2['TYPE']=='s')
-{
-   echo "<meta http-equiv='refresh' content='3;url=student.php'>"; 
-}
+		}
+	else{
 
-}
+		echo "<head><meta http-equiv='refresh' content='3;url=login.php'>";
+		echo "<title>Login Failed!</title></head>";
+		echo "<body><h2>Login failed!</h2></body>";
 
-mysql_close($link);
+		}
+	
+	mysqli_close($link);
 
-?>
+	?>
+
+</html>
