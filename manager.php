@@ -88,7 +88,7 @@
 			</ul>
 			&nbsp;<input type="submit" /> 
 		</form>
-		<br>
+		<br/>
 		<a href="logout.php">Logout</a>
 	</body>
 
